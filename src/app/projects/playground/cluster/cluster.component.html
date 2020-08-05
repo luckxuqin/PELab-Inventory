@@ -1,0 +1,29 @@
+<main class="content-area custom-padding">
+  <clr-datagrid>
+    <clr-dg-column [style.width.px]="200" class="width--num"> Hostname </clr-dg-column>
+    <clr-dg-column> HostIP </clr-dg-column>
+    <clr-dg-column> Cluster </clr-dg-column>
+    <clr-dg-column> Status</clr-dg-column>
+    <clr-dg-column> OEM </clr-dg-column>
+    <clr-dg-column> Server_Model </clr-dg-column>
+    <clr-dg-column> Team </clr-dg-column>
+    <clr-dg-column> AssignTo </clr-dg-column>
+    <clr-dg-column> TestBed </clr-dg-column>
+    <clr-dg-column> StartDate </clr-dg-column>
+    <clr-dg-column> EndDate </clr-dg-column>
+    <clr-dg-placeholder>No matching records found</clr-dg-placeholder>
+
+    <div *ngFor="let record of this.data">
+          <clr-dg-row>
+            <clr-dg-cell>
+              <a [routerLink]="['/playground/host', record.Hostname]">
+                {{ record.Hostname }}
+              </a>
+            </clr-dg-cell>
+            <clr-dg-cell *ngFor="let col of this.cols">
+              {{record[col]}}
+            </clr-dg-cell>
+          </clr-dg-row>
+    </div>
+  </clr-datagrid>
+</main>

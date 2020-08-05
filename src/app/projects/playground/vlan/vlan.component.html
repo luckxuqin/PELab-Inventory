@@ -1,0 +1,21 @@
+<main class="content-area custom-padding">
+  <clr-datagrid>
+    <clr-dg-column [style.width.px]="200" class="width--num"> Name </clr-dg-column>
+    <clr-dg-column> 802.1Q Tag </clr-dg-column>
+    <clr-dg-column> MAC-limit </clr-dg-column>
+    <clr-dg-column> Virtual router</clr-dg-column>
+    <clr-dg-placeholder>No matching records found</clr-dg-placeholder>
+
+    <clr-dg-row *clrDgItems="let record of this.data">
+      <clr-dg-cell *ngFor="let col of this.cols">
+        {{record[col]}}
+      </clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination1 [clrDgPageSize]="15">
+          {{ pagination1.firstItem + 1 }} - {{ pagination1.lastItem + 1 }}
+          of {{ pagination1.totalItems }} records
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  </clr-datagrid>
+</main>

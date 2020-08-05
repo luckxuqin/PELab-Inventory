@@ -1,0 +1,5 @@
+﻿VCF,SDDC,Username,Password,Owner,Management_Domain,Mgmt_Num_Cluster,Mgmt_Num_Host,Mgmt_Cluster_1,Mgmt_Cluster_2,Mgmt_Cluster_3,Mgmt_Cluster_4,Workload_Domain_1,Wkld1_Num_Cluster,Wkld1_Num_Host,Wkld1-Cluster_1,Wkld1-Cluster_2,Wkld1-Cluster_3,Wkld1-Cluster_4,Workload_Domain_2,Wkld2-Cluster_1,Wkld2_Num_Cluster,Wkld2_Num_Host,Wkld2-Cluster_2,Wkld2-Cluster_3,Wkld2-Cluster_4,Workload_Domain_3,Wkld3_Num_Cluster,Wkld3_Num_Host,Wkld3-Cluster_1,Wkld3-Cluster_2,Wkld3-Cluster_3,Wkld3-Cluster_4,Workload_Domain_4,Wkld4_Num_Cluster,Wkld4_Num_Host,Wkld4-Cluster_1,Wkld4-Cluster_2,Wkld4-Cluster_3,Wkld4-Cluster_4
+VCF1,SDDC1,4,7,Person A,Mgmt1,,,,,,,Wkld1-1,,,,,,,Wkld1-2,,,,,,,Wkld1-3,,,,,,,Wkld1-4,,,,,,
+VCF2,SDDC2,5,8,Person A,Mgmt2,,,,,,,Wkld2-1,,,,,,,Wkld2-2,,,,,,,Wkld2-3,,,,,,,Wkld2-4,,,,,,
+VCF3,SDDC3,6,9,Person A,Mgmt3,,,,,,,Wkld3-1,,,,,,,Wkld3-2,,,,,,,Wkld3-3,,,,,,,Wkld3-4,,,,,,
+VCF Lab 02,test01m01ad01.lab02.vsanpe.vmware.com,lab02vsanpe\administrator,P@ssword123!,Charles,lab02-m01,1,4,lab02-m01-cl01,,,,lab02-w01,1,8,lab02-wld01-cl01,,,,lab02-w02,lab02-wld02-cl01,3,12,lab02-wld02-cl02,lab02-wld02-cl03,,lab02-w03,1,4,lab02-wld03-cl01,,,,lab02-w04,1,4,lab02-wld04-cl01,,,

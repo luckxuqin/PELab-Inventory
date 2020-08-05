@@ -1,0 +1,137 @@
+<div class="main-container">
+  <div class="content-container">
+    <div class="content-area">
+      <button class="btn" (click)="wizard.open()">Update Selected Host</button>
+      <clr-datagrid [(clrDgSingleSelected)]="selectedHost" [clDgRowSelection]="true">
+        <clr-dg-column [style.width.px]="200" class="width--num" [clrDgField]="'Hostname'">
+          Hostname
+        </clr-dg-column>
+        <clr-dg-column *ngFor="let col of this.cols2" [clrDgField]="col">
+          {{ col }}
+        </clr-dg-column>
+
+
+        <!--clr-dg-column [style.width.px]="200" class="width--num"> Hostname </clr-dg-column>
+        <clr-dg-column> HostIP </clr-dg-column>
+        <clr-dg-column> Cluster </clr-dg-column>
+        <clr-dg-column> Status</clr-dg-column>
+        <clr-dg-column> OEM </clr-dg-column>
+        <clr-dg-column> Server_Model </clr-dg-column>
+        <clr-dg-column> Team </clr-dg-column>
+        <clr-dg-column> AssignTo </clr-dg-column>
+        <clr-dg-column> TestBed </clr-dg-column>
+        <clr-dg-column> StartDate </clr-dg-column>
+        <clr-dg-column> EndDate </clr-dg-column-->
+        <clr-dg-placeholder>No matching records found</clr-dg-placeholder>
+        <clr-dg-row *clrDgItems="let record of this.data" [clrDgItem]="record">
+          <clr-dg-cell>
+            <a [routerLink]="['/playground/host', record.Hostname]">
+              {{ record.Hostname }}
+            </a>
+          </clr-dg-cell>
+          <clr-dg-cell *ngFor="let col of this.cols2">
+            {{record[col]}}
+          </clr-dg-cell>
+        </clr-dg-row>
+        <clr-dg-footer>
+          <clr-dg-pagination #pagination1 [clrDgPageSize]="8">
+              {{ pagination1.firstItem + 1 }} - {{ pagination1.lastItem + 1 }}
+              of {{ pagination1.totalItems }} records
+          </clr-dg-pagination>
+        </clr-dg-footer>
+      </clr-datagrid>
+    </div>
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true">
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="/playground/updatehost">
+				<clr-icon shape="hard-disk" class="is-solid" clrVerticalNavIcon></clr-icon>
+				Update Hosts
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="/playground/update">
+				<clr-icon shape="rack-server" class="is-solid" clrVerticalNavIcon></clr-icon>
+				Update VCF Lab
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="/playground/updatevcfhost">
+				<clr-icon shape="rack-server" class="is-solid" clrVerticalNavIcon></clr-icon>
+				Update Host VCF Info
+			</a>
+    </clr-vertical-nav>
+  </div>
+</div>
+
+<clr-wizard #wizard [(clrWizardOpen)]="_open" (clrWizardOnCancel)="doCancel()">
+  <clr-wizard-title>Update the Host</clr-wizard-title>
+
+  <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
+  <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+  <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+  <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="!formPageOne.valid">
+    <ng-template clrPageTitle>Basic Info</ng-template>
+
+    <form #formPageOne="ngForm">
+      <section class="form-block">
+          <label>Update Basic Host Info</label>
+          <div class="form-group">
+              <label>Hostname</label>
+              <label for="hostnameInput" aria-haspopup="true" role="tooltip"
+                  [class.invalid]="hostname.touched && !hostname.valid"
+                  class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+                  <input type="text" id="hostnameInput" required [(ngModel)]="selectedHost.Hostname" name="hostname" #hostname="ngModel">
+                  <span class="tooltip-content">This field cannot be empty!</span>
+              </label>
+          </div>
+          <div class="form-group">
+            <label for="hostip">Host IP</label>
+            <input type="text" id="hostip" [(ngModel)]="selectedHost.HostIP" name="hostip" disabled>
+          </div>
+          <div class="form-group">
+            <label>Username</label>
+            <label for="usernameInput" aria-haspopup="true" role="tooltip"
+                [class.invalid]="username.touched && !username.valid"
+                class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+                <input type="text" id="usernameInput" required [(ngModel)]="selectedHost.Username" name="username" #username="ngModel">
+                <span class="tooltip-content">This field cannot be empty!</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <label for="passwordInput" aria-haspopup="true" role="tooltip"
+                [class.invalid]="password.touched && !password.valid"
+                class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+                <input type="text" id="passwordInput" required [(ngModel)]="selectedHost.Password" name="password" #password="ngModel">
+                <span class="tooltip-content">This field cannot be empty!</span>
+            </label>
+          </div>
+      </section>
+    </form>
+
+  </clr-wizard-page>
+
+  <clr-wizard-page (clrWizardPageOnCommit)="onCommit()" [clrWizardPageNextDisabled]="!formPageTwo.valid">
+    <ng-template clrPageTitle>ILO Info</ng-template>
+
+    <form #formPageTwo="ngForm">
+      <section class="form-block">
+          <label>Update ILO Info</label>
+          <div class="form-group">
+            <label>ILOIP</label>
+            <input type="text" id="ILOIPInput"  [(ngModel)]="selectedHost.ILOIP" name="ILOIP" #ILOIP="ngModel">
+          </div>
+          <div class="form-group">
+            <label>ILOName</label>
+            <input type="text" id="ILONameInput"  [(ngModel)]="selectedHost.ILOName" name="ILOName" #ILOName="ngModel">
+          </div>
+          <div class="form-group">
+            <label>ILOUser</label>
+            <input type="text" id="ILOUserInput"  [(ngModel)]="selectedHost.ILOUser" name="ILOUser" #ILOUser="ngModel">
+          </div>
+          <div class="form-group">
+            <label>ILOPassword</label>
+              <input type="text" id="ILOPasswordInput" [(ngModel)]="selectedHost.ILOPassword" name="ILOPassword" #ILOPassword="ngModel">
+          </div>
+      </section>
+    </form>
+  </clr-wizard-page>
+
+</clr-wizard>

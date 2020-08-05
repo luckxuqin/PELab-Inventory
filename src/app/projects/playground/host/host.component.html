@@ -1,0 +1,409 @@
+<!--button class="btn btn-outline">
+  <a [routerLink]="['/playground/home']">
+    Back to Home
+  </a>
+</button-->
+
+
+<div class="row">
+  <div class="col-lg-5 col-md-8 col-sm-12 col-xs-12">
+      <div class="card" style="width: 90vw">
+          <div class="card-header">
+              Detailed Information for {{this.record.Hostname}}
+              <div ng-container="text-right">
+                <div *ngIf="this.page === 'home'; then thenBlock else elseBlock"></div>
+                  <ng-template #thenBlock>
+                    <button class="btn btn-outline" >
+                      <a [routerLink]="['/playground/home']" style="color: rgb(12, 12, 12)">
+                        Back to Home
+                      </a>
+                    </button>
+                  </ng-template>
+                  <ng-template #elseBlock>
+                    <button class="btn btn-outline" >
+                      <a [routerLink]="['/playground/home', this.page]" style="color: rgb(12, 12, 12)">
+                        Back to Home
+                      </a>
+                    </button>
+                  </ng-template>
+
+              </div>
+
+          </div>
+          <div class="card-block">
+              <!--div class="card-media-block">
+                  <img style="height: 1000px; width: 1000px;" src="assets/images/{{record.Server_Model}}.png" class="card-media-image">
+                  <div class="card-media-description">
+                      <span class="card-media-title">
+                          {{this.record.OEM}}
+                      </span>
+                      <span class="card-media-text">
+                          {{this.record.Server_Model}}
+                      </span>
+                  </div>
+              </div-->
+              <div class="card-title">
+                Basic Information
+              </div>
+              <div class="card-text">
+                <div class="img-container">
+                  <div class="img-container__text">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">VCF Lab: {{this.record.VCF}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Domain: {{this.record.Domain}}</span>
+                    <br>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Cluster: {{this.record.Cluster}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">OEM & Model: {{this.record.OEM}} {{this.record.Server_Model}}</span>
+                    <br>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Host IP: {{this.record.HostIP}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Hostname: {{this.record.Hostname}}</span>
+                    <br>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Team: {{this.record.Team}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Assigned To: {{this.record.AssignTo}}</span>
+                  </div>
+                  <div class="img-container__image">
+                    <img style="height: 175px; width: 330px;" src="assets/images/{{this.record.Server_Model}}.png" alt={{this.record.Server_Model}} />
+                  </div>
+                  <br>
+                </div>
+
+              </div>
+              <div class="card-title">
+                  Credential
+                  <!-- <span style="color: rgb(121, 121, 121); padding: 20px">Name: {{this.record.Hostname}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 20px">Name: {{this.record.Hostname}}</span> -->
+                </div>
+                <div class="card-text">
+                  <span style="color: rgb(121, 121, 121); padding: 3px">ESXi UserName: {{this.record.Username}}</span>
+                  <span style="color: rgb(121, 121, 121); padding: 3px">ESXi Password: {{this.record.Password}}</span>
+                  <br>
+                  <span style="color: rgb(121, 121, 121); padding: 3px">ILO Hostname: {{this.record.ILOName}}</span>
+                  <span style="color: rgb(121, 121, 121); padding: 3px">ILO IP: {{this.record.ILOIP}}</span>
+                  <br>
+                  <span style="color: rgb(121, 121, 121); padding: 3px">ILO UserName: {{this.record.ILOUser}}</span>
+                  <span style="color: rgb(121, 121, 121); padding: 3px">ILO Password: {{this.record.ILOPassword}}</span>
+                  <br>
+                </div>
+
+              <div class="card-title">
+                CPU
+              </div>
+              <div class="card-text">
+                <span style="color: rgb(121, 121, 121); padding: 3px">CPU Model: {{this.record.CPU_Model}}</span>
+                <span style="color: rgb(121, 121, 121); padding: 3px">CPU Codename: {{this.record.CPU_Codename}}</span>
+                <span style="color: rgb(121, 121, 121); padding: 3px">CPU Sockets: {{this.record.CPU_Sockets}}</span>
+                <span style="color: rgb(121, 121, 121); padding: 3px">CPU cores total: {{this.record.CPU_Cores}}</span>
+                <br>
+              </div>
+
+
+              <div class="card-title">
+                Memory
+              </div>
+              <div class="card-text">
+                <span style="color: rgb(121, 121, 121); padding: 3px">RAM Size: {{this.record.Memory}}</span>
+                <br>
+              </div>
+
+              <div class="card-title">
+                Network
+              </div>
+              <div class="card-text">
+                <clr-datagrid>
+                  <clr-dg-column [style.width.px]="200" class="width--num"> NIC </clr-dg-column>
+                  <clr-dg-column> Model </clr-dg-column>
+                  <clr-dg-column> Speed</clr-dg-column>
+                  <clr-dg-column> Statue </clr-dg-column>
+                  <div *ngFor = "let nic of nic_host">
+                    <div *ngIf = "this.record[dic_nic2[nic]]">
+                      <clr-dg-row>
+                        <clr-dg-cell>
+                          {{nic}}
+                        </clr-dg-cell>
+                        <clr-dg-cell *ngFor= "let nic_further of dic_nic[nic]">
+                          {{this.record[nic_further]}}
+                        </clr-dg-cell>
+
+                      </clr-dg-row>
+                    </div>
+                  </div>
+                </clr-datagrid>
+                <!--div *ngIf="this.record.NIC_1_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC1 : {{this.record.NIC_1_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC1 Speed: {{this.record.NIC_1_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC1 Status: {{this.record.NIC_1_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_2_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC2 : {{this.record.NIC_2_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC2 Speed: {{this.record.NIC_2_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC2 Status: {{this.record.NIC_2_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_3_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC3 : {{record.NIC_3_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC3 Speed: {{record.NIC_3_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC3 Status: {{record.NIC_3_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_4_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC4 : {{record.NIC_4_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC4 Speed: {{record.NIC_4_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC4 Status: {{record.NIC_4_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_5_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC5 : {{record.NIC_5_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC5 Speed: {{record.NIC_5_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC5 Status: {{record.NIC_5_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_6_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC6 : {{record.NIC_6_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC6 Speed: {{record.NIC_6_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC6 Status: {{record.NIC_6_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_7_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC7 : {{record.NIC_7_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC7 Speed: {{record.NIC_7_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC7 Status: {{record.NIC_7_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_8_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC8 : {{record.NIC_8_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC8 Speed: {{record.NIC_8_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC8 Status: {{record.NIC_8_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_9_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC9 : {{record.NIC_9_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC9 Speed: {{record.NIC_9_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC9 Status: {{record.NIC_9_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_10_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC10 : {{record.NIC_10_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC10 Speed: {{record.NIC_10_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC10 Status: {{record.NIC_10_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_11_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC11 : {{record.NIC_11_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC11 Speed: {{record.NIC_11_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC11 Status: {{record.NIC_11_Link}}</span>
+                </div>
+                <div *ngIf="this.record.NIC_12_Description">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC12 : {{record.NIC_12_Description}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC12 Speed: {{record.NIC_12_Speed}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">NIC12 Status: {{record.NIC_12_Link}}</span>
+                </div-->
+              </div>
+
+              <div class="card-title">
+                Storage
+                <!-- <span style="color: rgb(121, 121, 121); padding: 20px">Name: {{record.Hostname}}</span>
+                  <span style="color: rgb(121, 121, 121); padding: 20px">Name: {{record.Hostname}}</span> -->
+              </div>
+              <div class="card-text">
+                <clr-datagrid>
+                  <clr-dg-column [style.width.px]="200" class="width--num"> Disk </clr-dg-column>
+                  <clr-dg-column> Vendor </clr-dg-column>
+                  <clr-dg-column> Model</clr-dg-column>
+                  <clr-dg-column> Size </clr-dg-column>
+                  <div *ngFor = "let disk of disk_host">
+                    <div *ngIf = "this.record[dic_disk2[disk]]">
+                      <clr-dg-row>
+                        <clr-dg-cell>
+                          {{disk}}
+                        </clr-dg-cell>
+                        <clr-dg-cell *ngFor= "let disk_further of dic_disk[disk]">
+                          {{this.record[disk_further]}}
+                        </clr-dg-cell>
+
+                      </clr-dg-row>
+                    </div>
+                  </div>
+                </clr-datagrid>
+                <!--div *ngIf="record.HD_1_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk1 Vendor: {{record.HD_1_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk1 Model: {{record.HD_1_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk1 Size: {{record.HD_1_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_2_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk2 Vendor: {{record.HD_2_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk2 Model: {{record.HD_2_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk2 Size: {{record.HD_2_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_3_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk3 Vendor: {{record.HD_3_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk3 Model: {{record.HD_3_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk3 Size: {{record.HD_3_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_4_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk4 Vendor: {{record.HD_4_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk4 Model: {{record.HD_4_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk4 Size: {{record.HD_4_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_5_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk5 Vendor: {{record.HD_5_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk5 Model: {{record.HD_5_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk5 Size: {{record.HD_5_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_6_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk6 Vendor: {{record.HD_6_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk6 Model: {{record.HD_6_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk6 Size: {{record.HD_6_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_7_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk7 Vendor: {{record.HD_7_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk7 Model: {{record.HD_7_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk7 Size: {{record.HD_7_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_8_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk8 Vendor: {{record.HD_8_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk8 Model: {{record.HD_8_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk8 Size: {{record.HD_8_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_9_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk9 Vendor: {{record.HD_9_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk9 Model: {{record.HD_9_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk9 Size: {{record.HD_9_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_10_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk10 Vendor: {{record.HD_10_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk10 Model: {{record.HD_10_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk10 Size: {{record.HD_10_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_11_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk11 Vendor: {{record.HD_11_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk11 Model: {{record.HD_11_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk11 Size: {{record.HD_11_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_12_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk12 Vendor: {{record.HD_12_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk12 Model: {{record.HD_12_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk12 Size: {{record.HD_12_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_13_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk13 Vendor: {{record.HD_13_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk13 Model: {{record.HD_13_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk13 Size: {{record.HD_13_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_14_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk14 Vendor: {{record.HD_14_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk14 Model: {{record.HD_14_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk14 Size: {{record.HD_14_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_15_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk15 Vendor: {{record.HD_15_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk15 Model: {{record.HD_15_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk15 Size: {{record.HD_15_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_16_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk16 Vendor: {{record.HD_16_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk16 Model: {{record.HD_16_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk16 Size: {{record.HD_16_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_17_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk17 Vendor: {{record.HD_17_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk17 Model: {{record.HD_17_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk17 Size: {{record.HD_17_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_18_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk18 Vendor: {{record.HD_18_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk18 Model: {{record.HD_18_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk18 Size: {{record.HD_18_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_19_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk19 Vendor: {{record.HD_19_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk19 Model: {{record.HD_19_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk19 Size: {{record.HD_19_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_20_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk20 Vendor: {{record.HD_20_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk20 Model: {{record.HD_20_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk20 Size: {{record.HD_20_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_21_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk21 Vendor: {{record.HD_21_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk21 Model: {{record.HD_21_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk21 Size: {{record.HD_21_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_22_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk22 Vendor: {{record.HD_22_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk22 Model: {{record.HD_22_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk22 Size: {{record.HD_22_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_23_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk23 Vendor: {{record.HD_23_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk23 Model: {{record.HD_23_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk23 Size: {{record.HD_23_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_24_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk24 Vendor: {{record.HD_24_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk24 Model: {{record.HD_24_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk24 Size: {{record.HD_24_Size}}</span>
+                </div>
+                <div *ngIf="record.HD_25_Vendor">
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk25 Vendor: {{record.HD_25_Vendor}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk25 Model: {{record.HD_25_Model}}</span>
+                    <span style="color: rgb(121, 121, 121); padding: 3px">Disk25 Size: {{record.HD_25_Size}}</span>
+                </div-->
+              </div>
+
+          </div>
+          <div class="card-footer">
+              <button class="btn btn-sm btn-link" (click)="this.showReserve = true; this.vo.server = this.record.Hostname">Reserve this server</button>
+              <button class="btn btn-sm btn-link" (click)="this.showFree = true; this.vo.server = this.record.Hostname">Free this server</button>
+              <!-- <button class="btn btn-sm btn-link" (click)="this.showReport = true; this.sta.server = record.Hostname">Server Status</button> -->
+
+              <div *ngIf="this.showReserve" class="modal">
+                  <div class="modal-dialog fadeDown in" role="dialog" aria-hidden="true">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button aria-label="Close" class="close" type="button" (click)="this.showReserve = false">
+                                  <clr-icon aria-hidden="true" shape="close"></clr-icon>
+
+                              </button>
+                              <h3 class="modal-title">Reserve this server</h3>
+                          </div>
+                          <div class="modal-body">
+
+                                    <label for="selects_1">Select your team:
+
+                                            <select id="selects_1" [(ngModel)]="this.vo.team">
+                                                <option>Solutions</option>
+                                                <option>TMM</option>
+                                                <option>PoC</option>
+                                            </select>
+
+                                    </label>
+
+                            <p>Input your name:  <input type="text" [(ngModel)]="this.vo.name" id="nameInput"></p>
+                            <p>Project or Purpose:  <input type="text" [(ngModel)]="this.vo.project" id="nameProject" required></p>
+                            <p>Start Date:  <input type="date" [(ngModel)]="this.vo.startDate" clrDate></p>
+                            <p>End Date:  <input type="date" [(ngModel)]="this.vo.endDate" clrDate></p>
+                          </div>
+                          <div class="modal-footer">
+                              <button class="btn btn-outline" type="button" (click)="this.showReserve = false">Cancel</button>
+                              <button class="btn btn-primary" (click)="this.saveReserve(); this.showReserve = false" type="button">Ok</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div *ngIf="this.showReserve" class="modal-backdrop" aria-hidden="true"></div>
+
+              <div *ngIf="this.showFree" class="modal">
+                <div class="modal-dialog fadeDown in" role="dialog" aria-hidden="true">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button aria-label="Close" class="close" type="button" (click)="this.showFree = false">
+                                <clr-icon aria-hidden="true" shape="close"></clr-icon>
+                            </button>
+                            <h3 class="modal-title">Free this server</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you want to free this server?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline" type="button" (click)="this.showFree = false">Cancel</button>
+                            <button class="btn btn-primary" (click)="this.saveFree(); this.showFree = false" type="button">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="this.showFree" class="modal-backdrop" aria-hidden="true"></div>
+          </div>
+        </div>
+    </div>
+</div>

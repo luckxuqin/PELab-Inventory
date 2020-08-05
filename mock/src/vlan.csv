@@ -1,0 +1,22 @@
+Name,802.1Q Tag,MAC-limit,Virtual router
+wdc-pod2-pe-vsan-vm,1284,No-limit,VR-Default
+wdc-pod2-pe-vsan-mgmt,1905,No-limit,VR-Default
+priv-ora-back,4036,No-limit,VR-Default
+priv-ora-rac1,4033,No-limit,VR-Default
+priv-ora-rac2,4034,No-limit,VR-Default
+priv-pe-vsan,4030,No-limit,VR-Default
+priv-sql-aag,4031,No-limit,VR-Default
+priv-vsan-sc-site-a1,4040,No-limit,VR-Default
+priv-vsan-sc-site-a2,4043,No-limit,VR-Default
+priv-vsan-sc-site-b1,4041,No-limit,VR-Default
+priv-vsan-sc-site-b2,4044,No-limit,VR-Default
+priv-vsan-sc-site-c2,4045,No-limit,VR-Default
+private-pe-NFS,4027,No-limit,VR-Default
+private-pe-oracle4022,4022,No-limit,VR-Default
+private-pe-oracle4023,4023,No-limit,VR-Default
+private-pe-vMotion,4021,No-limit,VR-Default
+private-vmotion,4035,No-limit,VR-Default
+private-vsan-siteb-4024,4024,No-limit,VR-Default
+private-vsan-sitec-4025,4025,No-limit,VR-Default
+wdc-pod2-vsan-vms,1600,No-limit,VR-Default
+priv-exch-dag,4032,No-limit,VR-Default

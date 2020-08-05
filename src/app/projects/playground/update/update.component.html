@@ -1,0 +1,269 @@
+<div class="main-container">
+  <div class="content-container">
+    <div class="content-area">
+      <button class="btn" (click)="wizard.open()">New VCF Lab</button>
+      <button class="btn" (click)="copy(); wizard.open()">Update Selected VCF Lab</button>
+      <clr-datagrid [(clrDgSingleSelected)]="selectedVCF" [clDgRowSelection]="true">
+        <clr-dg-column [style.width.px]="200" class="width--num" [clrDgField]="'Name'">
+          VCF
+        </clr-dg-column>
+        <clr-dg-column [style.width.px]="350" class="width--num" [clrDgField]="'SDDC'">
+          SDDC
+        </clr-dg-column>
+        <clr-dg-column [style.width.px]="200" class="width--num" [clrDgField]="'Username'">
+          Username
+        </clr-dg-column>
+        <clr-dg-column [style.width.px]="200" class="width--num" [clrDgField]="'Password'">
+          Password
+        </clr-dg-column>
+        <clr-dg-column [style.width.px]="200" class="width--num" [clrDgField]="'Owner'">
+          Owner
+        </clr-dg-column>
+        <clr-dg-placeholder>No matching records found</clr-dg-placeholder>
+        <clr-dg-row *clrDgItems="let record1 of this.data" [clrDgItem]="record1">
+          <clr-dg-cell *ngFor="let col2 of this.cols_vcf">
+            {{ record1[col2] }}
+          </clr-dg-cell>
+          <div *clrIfExpanded
+                  ngProjectAs="clr-dg-row-detail">
+            Link to VCF Lab:
+            <a [routerLink]="['/playground/vcf',record1.Name]">
+                    {{ record1.Name }}
+            </a>
+            <br>
+            <div *ngFor="let domain of this.data_domain">
+              <div *ngIf="domain.Vcf==record1.Name && domain.Type=='Management'">
+                Management Domain is: {{domain.Domain_Name}}
+              </div>
+            </div>
+            This VCF contains the following workload domains:
+            <div *ngFor="let domain of this.data_domain">
+              <div *ngIf="domain.Vcf==record1.Name && domain.Type=='Workload'">
+                {{domain.Domain_Name}}
+              </div>
+            </div>
+        </div>
+
+        </clr-dg-row>
+
+        <clr-dg-footer>
+            <clr-dg-pagination #pagination1 [clrDgPageSize]="20">
+                {{ pagination1.firstItem + 1 }} - {{ pagination1.lastItem + 1 }}
+                of {{ pagination1.totalItems }} records
+            </clr-dg-pagination>
+        </clr-dg-footer>
+
+      </clr-datagrid>
+    </div>
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true">
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="/playground/updatehost">
+				<clr-icon shape="hard-disk" class="is-solid" clrVerticalNavIcon></clr-icon>
+				Update Hosts
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="/playground/update">
+				<clr-icon shape="rack-server" class="is-solid" clrVerticalNavIcon></clr-icon>
+				Update VCF Lab
+      </a>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="/playground/updatevcfhost">
+				<clr-icon shape="rack-server" class="is-solid" clrVerticalNavIcon></clr-icon>
+				Update Host VCF Info
+			</a>
+    </clr-vertical-nav>
+  </div>
+</div>
+
+<clr-wizard #wizard (clrWizardOnCancel)="doCancel()" [(clrWizardOpen)]="_open">
+  <clr-wizard-title>Create a New VCF Lab</clr-wizard-title>
+
+  <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
+  <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+  <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+  <clr-wizard-button [type]="'finish'">Finish</clr-wizard-button>
+
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="(name.pristine && this.disable) || !formPageOne.valid">
+    <ng-template clrPageTitle>Enter your VCF Lab Basic Info</ng-template>
+
+    <form #formPageOne="ngForm">
+      <section class="form-block">
+          <label>Enter VCF Info</label>
+          <div class="form-group">
+              <label>Name</label>
+              <label for="nameInput" aria-haspopup="true" role="tooltip"
+                  [class.invalid]="name.touched && !name.valid"
+                  class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+                  <input type="text" id="nameInput" required [(ngModel)]="vcf.Name" name="name" #name="ngModel">
+                  <span class="tooltip-content">This field cannot be empty!</span>
+              </label>
+          </div>
+          <div class="form-group">
+              <label for="sddc">SDDC</label>
+              <input type="text" id="sddc" [(ngModel)]="vcf.SDDC" name="sddc">
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" [(ngModel)]="vcf.Username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" id="password" [(ngModel)]="vcf.Password" name="password">
+          </div>
+          <div class="form-group">
+            <label for="owner">Owner</label>
+            <input type="text" id="owner" [(ngModel)]="vcf.Owner" name="owner">
+          </div>
+      </section>
+    </form>
+
+  </clr-wizard-page>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="(mgmt_name.pristine && this.disable)  || !formPageTwo.valid">
+    <ng-template clrPageTitle> Management Domain</ng-template>
+
+    <form #formPageTwo="ngForm">
+      <section class="form-block">
+          <label>Enter Management Domain Info</label>
+          <div class="form-group">
+              <label>Name</label>
+              <label for="mgmt_name" aria-haspopup="true" role="tooltip"
+                  [class.invalid]="mgmt_name.touched && !mgmt_name.valid"
+                  class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+                  <input type="text" id="mgmt_name" required [(ngModel)]="domain_mgmt.Domain_Name" name="mgmt_name" #mgmt_name="ngModel">
+                  <span class="tooltip-content">This field cannot be empty!</span>
+              </label>
+          </div>
+          <div class="form-group">
+            <label for="mgmt_num_cluster">Number of Clusters</label>
+            <input type="number" id="mgmt_num_cluster" [(ngModel)]="domain_mgmt.Cluster_Num" name="mgmt_num_cluster">
+          </div>
+          <!--div class="form-group">
+            <label for="mgmt_num_host">Number of Hosts</label>
+            <input type="number" id="mgmt_num_host" [(ngModel)]="vcf.Mgmt_Num_Host" name="mgmt_num_host">
+          </div-->
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=1">
+            <label for="mgmt_cluster_1">Cluster 1</label>
+            <input type="text" id="mgmt_cluster_1" [(ngModel)]="domain_mgmt.clusters[0].Cluster_Name" name="mgmt_cluster_1">
+          </div>
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=2">
+            <label for="mgmt_cluster_2">Cluster 2</label>
+            <input type="text" id="mgmt_cluster_2" [(ngModel)]="domain_mgmt.clusters[1].Cluster_Name" name="mgmt_cluster_2">
+          </div>
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=3">
+            <label for="mgmt_cluster_3">Cluster 3</label>
+            <input type="text" id="mgmt_cluster_3" [(ngModel)]="domain_mgmt.clusters[2].Cluster_Name" name="mgmt_cluster_3">
+          </div>
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=4">
+            <label for="mgmt_cluster_4">Cluster 4</label>
+            <input type="text" id="mgmt_cluster_4" [(ngModel)]="domain_mgmt.clusters[3].Cluster_Name" name="mgmt_cluster_4">
+          </div>
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=5">
+            <label for="mgmt_cluster_5">Cluster 5</label>
+            <input type="text" id="mgmt_cluster_5" [(ngModel)]="domain_mgmt.clusters[4].Cluster_Name" name="mgmt_cluster_5">
+          </div>
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=6">
+            <label for="mgmt_cluster_6">Cluster 6</label>
+            <input type="text" id="mgmt_cluster_6" [(ngModel)]="domain_mgmt.clusters[5].Cluster_Name" name="mgmt_cluster_6">
+          </div>
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=7">
+            <label for="mgmt_cluster_7">Cluster 7</label>
+            <input type="text" id="mgmt_cluster_7" [(ngModel)]="domain_mgmt.clusters[6].Cluster_Name" name="mgmt_cluster_7">
+          </div>
+          <div class="form-group" *ngIf="domain_mgmt.clusters.length>=8">
+            <label for="mgmt_cluster_8">Cluster 8</label>
+            <input type="text" id="mgmt_cluster_8" [(ngModel)]="domain_mgmt.clusters[7].Cluster_Name" name="mgmt_cluster_8">
+          </div>
+      </section>
+    </form>
+    <button class="btn btn-secondary" (click)="addClusterMgmt()">Add a Cluster for this Domain</button>
+
+  </clr-wizard-page>
+
+  <ng-container *ngFor="let index of workload_index">
+    <clr-wizard-page [clrWizardPageNextDisabled]="(wkld_name.pristine && this.disable)  || !formPageThree.valid">
+      <ng-template clrPageTitle>Workload Domain {{index+1}}</ng-template>
+
+      <form #formPageThree="ngForm">
+        <section class="form-block">
+            <label>Enter Workload Domain {{index+1}} Info</label>
+            <div class="form-group">
+                <label>Name</label>
+                <label for="wkld{{index}}_name" aria-haspopup="true" role="tooltip"
+                    [class.invalid]="wkld_name.touched && !wkld_name.valid"
+                    class="tooltip tooltip-validation tooltip-md tooltip-bottom-right">
+                    <input type="text" id="wkld{{index}}_name" required [(ngModel)]="domain_wkld[index].Domain_Name" name="wkld{{index}}_name" #wkld_name="ngModel">
+                    <span class="tooltip-content">This field cannot be empty!</span>
+                </label>
+            </div>
+            <div class="form-group">
+              <label for="wkld{{index}}_num_cluster">Number of Clusters</label>
+              <input type="number" id="wkld{{index}}_num_cluster" [(ngModel)]="domain_wkld[index].Cluster_Num" name="wkld{{index}}_num_cluster">
+            </div>
+            <!--div class="form-group">
+              <label for="wkld1_num_host">Number of Hosts</label>
+              <input type="number" id="wkld1_num_host" [(ngModel)]="vcf.wkld1_Num_Host" name="wkld1_num_host">
+            </div-->
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=1">
+              <label for="wkld{{index}}_cluster_1">Cluster 1</label>
+              <input type="text" id="wkld{{index}}_cluster_1" [(ngModel)]="domain_wkld[index].clusters[0].Cluster_Name" name="wkld{{index}}_cluster_1">
+            </div>
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=2">
+              <label for="wkld{{index}}_cluster_2">Cluster 2</label>
+              <input type="text" id="wkld{{index}}_cluster_2" [(ngModel)]="domain_wkld[index].clusters[1].Cluster_Name" name="wkld{{index}}_cluster_2">
+            </div>
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=3">
+              <label for="wkld{{index}}_cluster_3">Cluster 3</label>
+              <input type="text" id="wkld{{index}}_cluster_3" [(ngModel)]="domain_wkld[index].clusters[2].Cluster_Name" name="wkld{{index}}_cluster_3">
+            </div>
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=4">
+              <label for="wkld{{index}}_cluster_4">Cluster 4</label>
+              <input type="text" id="wkld{{index}}_cluster_4" [(ngModel)]="domain_wkld[index].clusters[3].Cluster_Name" name="wkld{{index}}_cluster_4">
+            </div>
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=5">
+              <label for="wkld{{index}}_cluster_5">Cluster 5</label>
+              <input type="text" id="wkld{{index}}_cluster_5" [(ngModel)]="domain_wkld[index].clusters[4].Cluster_Name" name="wkld{{index}}_cluster_5">
+            </div>
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=6">
+              <label for="wkld{{index}}_cluster_6">Cluster 6</label>
+              <input type="text" id="wkld{{index}}_cluster_6" [(ngModel)]="domain_wkld[index].clusters[5].Cluster_Name" name="wkld{{index}}_cluster_6">
+            </div>
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=7">
+              <label for="wkld{{index}}_cluster_7">Cluster 7</label>
+              <input type="text" id="wkld{{index}}_cluster_7" [(ngModel)]="domain_wkld[index].clusters[6].Cluster_Name" name="wkld{{index}}_cluster_7">
+            </div>
+            <div class="form-group" *ngIf="domain_wkld[index].clusters.length>=8">
+              <label for="wkld{{index}}_cluster_8">Cluster 8</label>
+              <input type="text" id="wkld{{index}}_cluster_8" [(ngModel)]="domain_wkld[index].clusters[7].Cluster_Name" name="wkld{{index}}_cluster_8">
+            </div>
+        </section>
+      </form>
+      <button class="btn btn-secondary" (click)="addClusterWkld(index)">Add a Cluster for this Domain</button>
+      <button class="btn btn-secondary" (click)="addWkldDomain()">Add a Workload Domain</button>
+    </clr-wizard-page>
+  </ng-container>
+
+
+
+
+  <clr-wizard-page
+  (clrWizardPageOnCommit)="onCommit()"
+  (clrWizardPageOnCancel)="doCancel()" >
+    <ng-template clrPageTitle>Finish</ng-template>
+    <p>Please review the following information and click finish to upload.</p>
+    <label>Your information</label>
+    <section>
+      <p>
+        <label>Your VCF:</label>
+        <span>{{ this.vcf.Name }}</span>
+      </p>
+      <p>
+        <label>Your SDDC:</label>
+        <span>{{ this.vcf.SDDC }}</span>
+      </p>
+      <p>
+        <label>Number of Domains:</label>
+        <span>{{ this.domain_wkld.length+1}}</span>
+      </p>
+    </section>
+
+  </clr-wizard-page>
+</clr-wizard>

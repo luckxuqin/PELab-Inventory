@@ -1,0 +1,87 @@
+<main class="content-area custom-padding">
+  <form>
+    <section class="form-block">
+      <div class="form-group">
+        <label for="CPUFilter" width="15">CPU Core Number</label>
+        <clr-checkbox
+            name="cpuCheckbox"
+            id="cpucheck"
+            [(ngModel)]="cpucheck"
+            [clrInline]="true">
+        </clr-checkbox>
+        <input type="number" id="CPUFilter" size="45" [(ngModel)]="cores" name="cores">
+        <!--button class="btn btn-primary" (click)="CPUfilter()">Filter</button-->
+      </div>
+      <div class="form-group">
+        <label for="DiskFilter">Disk Type</label>
+        <clr-checkbox
+            name="diskCheckbox"
+            id="diskcheck"
+            [(ngModel)]="diskcheck"
+            [clrInline]="true">
+        </clr-checkbox>
+        <div class="select">
+          <select id="DISKInput" [(ngModel)]="disk" name="disk">
+            <option [ngValue]="null"></option>
+            <option>All Flash</option>
+            <option>Hybrid</option>
+          </select>
+        </div>
+        <!--input type="text" id="DiskFilter" size="20"-->
+        <!--button class="btn btn-primary">Filter</button-->
+      </div>
+      <div class="form-group">
+        <label for="NICfilter">NIC Speed</label>
+        <clr-checkbox
+            name="nicCheckbox"
+            id="niccheck"
+            [(ngModel)]="niccheck"
+            [clrInline]="true">
+        </clr-checkbox>
+        <div class="select">
+          <select id="NICInput" [(ngModel)]="nic" name="nic">
+            <option [ngValue]="null"></option>
+            <option>10 Gbps</option>
+            <option>25 Gbps</option>
+          </select>
+        </div>
+        <!--button class="btn btn-primary" (click)="NICfilter()">Filter</button-->
+      </div>
+      <button class="btn btn-primary" (click)="Filter()">Filter</button>
+    </section>
+  </form>
+  <clr-datagrid>
+    <clr-dg-column *ngFor="let col of this.cols"
+        [clrDgField]="col">
+        {{ col }}
+    </clr-dg-column>
+    <!--clr-dg-column [style.width.px]="200" class="width--num"> Hostname </clr-dg-column>
+    <clr-dg-column> HostIP </clr-dg-column>
+    <clr-dg-column> Cluster </clr-dg-column>
+    <clr-dg-column> Status</clr-dg-column>
+    <clr-dg-column> OEM </clr-dg-column>
+    <clr-dg-column> Server_Model </clr-dg-column>
+    <clr-dg-column> Team </clr-dg-column>
+    <clr-dg-column> AssignTo </clr-dg-column>
+    <clr-dg-column> TestBed </clr-dg-column>
+    <clr-dg-column> StartDate </clr-dg-column>
+    <clr-dg-column> EndDate </clr-dg-column-->
+    <clr-dg-placeholder>No matching records found</clr-dg-placeholder>
+    <clr-dg-row *clrDgItems="let record of this.data">
+      <clr-dg-cell>
+        <a [routerLink]="['/playground/host', record.Hostname]">
+          {{ record.Hostname }}
+        </a>
+      </clr-dg-cell>
+      <clr-dg-cell *ngFor="let col of this.cols2">
+        {{record[col]}}
+      </clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination1 [clrDgPageSize]="15">
+          {{ pagination1.firstItem + 1 }} - {{ pagination1.lastItem + 1 }}
+          of {{ pagination1.totalItems }} records
+      </clr-dg-pagination>
+    </clr-dg-footer>
+  </clr-datagrid>
+</main>

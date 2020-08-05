@@ -1,0 +1,95 @@
+<main class="content-area custom-padding">
+    <clr-datagrid>
+      <clr-dg-column *ngFor="let col of this.cols_vcf"
+        [clrDgField]="col">
+        {{ col }}
+      </clr-dg-column>
+      <!--clr-dg-column > VCF </clr-dg-column>
+      <clr-dg-column> SDDC </clr-dg-column>
+      <clr-dg-column> Username </clr-dg-column>
+      <clr-dg-column> Password </clr-dg-column>
+      <clr-dg-column> Owner </clr-dg-column-->
+      <clr-dg-placeholder>No matching records found</clr-dg-placeholder>
+      <clr-dg-row *clrDgItems="let record1 of this.data_vcf">
+        <clr-dg-cell *ngFor="let col2 of this.cols_vcf">
+          {{ record1[col2] }}
+        </clr-dg-cell>
+        <div *clrIfExpanded
+                  ngProjectAs="clr-dg-row-detail">
+            Link to VCF Lab:
+            <a [routerLink]="['/playground/vcf',record1.Name]">
+                    {{ record1.Name }}
+            </a>
+            <br>
+            <div *ngFor="let domain of this.data_domain">
+              <div *ngIf="domain.Vcf==record1.Name && domain.Type=='Management'">
+                Management Domain is: {{domain.Domain_Name}}
+              </div>
+            </div>
+            This VCF contains the following workload domains:
+            <div *ngFor="let domain of this.data_domain">
+              <div *ngIf="domain.Vcf==record1.Name && domain.Type=='Workload'">
+                {{domain.Domain_Name}}
+              </div>
+            </div>
+        </div>
+
+      </clr-dg-row>
+
+      <clr-dg-footer>
+          <clr-dg-pagination #pagination1 [clrDgPageSize]="20">
+              {{ pagination1.firstItem + 1 }} - {{ pagination1.lastItem + 1 }}
+              of {{ pagination1.totalItems }} records
+          </clr-dg-pagination>
+      </clr-dg-footer>
+
+    </clr-datagrid>
+
+  <!-- <div *ngIf="this.showReserve" class="modal">
+      <div class="modal-dialog fadeDown in" role="dialog" aria-hidden="true">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button aria-label="Close" class="close" type="button" (click)="this.showReserve = false">
+                      <clr-icon aria-hidden="true" shape="close"></clr-icon>
+
+                  </button>
+                  <h3 class="modal-title">Reserve this server</h3>
+              </div>
+              <div class="modal-body">
+                <p>Input your name:  <input type="text" [(ngModel)]="this.vo.name" id="nameInput" required></p>
+                <p>Project or Purpose:  <input type="text" [(ngModel)]="this.vo.project" id="nameProject" required></p>
+                <p>Valid Until:  <input type="date" [(ngModel)]="this.vo.date" clrDate></p>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-outline" type="button" (click)="this.showReserve = false">Cancel</button>
+                  <button class="btn btn-primary" (click)="this.save()" type="button">Ok</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div *ngIf="this.showReserve" class="modal-backdrop" aria-hidden="true"></div> -->
+
+
+  <!-- <div *ngIf="this.showFree" class="modal">
+      <div class="modal-dialog fadeDown in" role="dialog" aria-hidden="true">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button aria-label="Close" class="close" type="button" (click)="this.showFree = false">
+                      <clr-icon aria-hidden="true" shape="close"></clr-icon>
+                  </button>
+                  <h3 class="modal-title">Free this server</h3>
+              </div>
+              <div class="modal-body">
+                  <p>Do you want to free this server?</p>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-outline" type="button" (click)="this.showFree = false">Cancel</button>
+                  <button class="btn btn-primary" type="button">Ok</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div *ngIf="this.showFree" class="modal-backdrop" aria-hidden="true"></div> -->
+
+</main>
+

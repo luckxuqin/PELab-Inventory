@@ -1,0 +1,71 @@
+<clr-main-container>
+
+  <clr-header class="header">
+    <div class="branding">
+      <a class="nav-link" routerLink="/">
+        <clr-icon shape="vmw-app" class="is-solid"></clr-icon>
+        <span class="title">
+          <strong>SABU PE & TM</strong>
+          <br>
+          <small>LAB Management</small>
+        </span>
+      </a>
+    </div>
+
+    <div class="header-nav">
+      <a routerLink="home" routerLinkActive="active" class="nav-link nav-text">Inventory List</a>
+      <a routerLink="otherhosts" routerLinkActive="active" class="nav-link nav-text">Hosts List</a>
+      <a routerLink="vlan" routerLinkActive="active" class="nav-link nav-text">VLAN Info</a>
+      <a routerLink="update" routerLinkActive="active" class="nav-link nav-text">Update</a>
+      <!-- <a routerLink="rxjs" routerLinkActive="active" class="nav-link nav-text">Configuration</a> -->
+    </div>
+
+    <div class="header-actions">
+      <clr-dropdown>
+        <button class="nav-icon" clrDropdownTrigger>
+          <clr-icon shape="user"></clr-icon>
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <button (click)="this.vo.aboutOpen = true" clrDropdownItem>About</button>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+
+    </div>
+
+  </clr-header>
+
+
+  <router-outlet></router-outlet>
+
+
+  <footer class="container text-right">
+    <button class="btn btn-outline">
+      <a [routerLink]="['/playground/home']" style="color: rgb(12, 12, 12)">
+        Back to Home
+    </a>
+    </button>
+    Powered by
+    <img src="assets/images/clarity-logo.svg" alt="Clarity Logo">
+  </footer>
+
+</clr-main-container>
+
+
+
+
+
+<clr-modal [(clrModalOpen)]="this.vo.aboutOpen" class="dialog about">
+  <h3 class="modal-title">About</h3>
+  <div class="modal-body">
+    <ul class="list-unstyled infos">
+      <li><strong class="labels">hash</strong>{{ this.info.hash }}
+      <li><strong class="labels">date</strong>{{ this.info.date | date: 'medium' }}
+      <li><strong class="labels">version</strong>{{ this.info.version }}
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="this.vo.aboutOpen = false">Ok</button>
+  </div>
+</clr-modal>
+

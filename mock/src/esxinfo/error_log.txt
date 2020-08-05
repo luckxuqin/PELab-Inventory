@@ -1,0 +1,45 @@
+Script Start Time | 2020-05-21 18:05:30.141980
+10.156.28.4 | System Not Pingable | Action: Verify IP!
+10.156.28.9 | System Not Pingable | Action: Verify IP!
+10.156.28.12 | System Not Pingable | Action: Verify IP!
+10.156.28.15 | System Not Pingable | Action: Verify IP!
+10.156.28.16 | System Not Pingable | Action: Verify IP!
+10.156.28.18 | SSHException | SSH
+10.156.28.19 | SSHException | SSH
+10.156.28.20 | User: root Password: ca$hc0w - vim-cmd Failed | vim-cmd
+(error message: Failed to login: Connection reset by peer: The connection is terminated by the remote end with a reset packet. Usually, this is a sign of a network problem,  timeout, or service overload.)
+10.156.28.37 | System Not Pingable | Action: Verify IP!
+10.156.28.38 | System Not Pingable | Action: Verify IP!
+10.156.28.39 | System Not Pingable | Action: Verify IP!
+10.156.28.152 | System Not Pingable | Action: Verify IP!
+
+10.156.28.161 | System Not Pingable | Action: Verify IP!
+10.156.28.162 | System Not Pingable | Action: Verify IP!
+
+10.156.28.172 | System Not Pingable | Action: Verify IP!
+10.156.28.173 | System Not Pingable | Action: Verify IP!
+10.156.28.159 | System Not Pingable | Action: Verify IP!
+10.156.28.160 | System Not Pingable | Action: Verify IP!
+
+
+
+
+10.159.16.69 | System Not Pingable | Action: Verify IP!
+10.159.16.70 | System Not Pingable | Action: Verify IP!
+10.159.16.71 | System Not Pingable | Action: Verify IP!
+10.159.16.72 | System Not Pingable | Action: Verify IP!
+10.159.16.75 | System Not Pingable | Action: Verify IP!
+10.159.16.76 | User: root Authentication Failed | Password: ca$hc0w
+10.159.16.77 | User: root Authentication Failed | Password: ca$hc0w
+10.159.16.78 | Socket Error |Socket
+(ssh: connect to host 10.159.16.78 port 22: Connection refused)
+
+10.159.16.79 | User: root Authentication Failed | Password: ca$hc0w
+10.159.16.80 | Socket Error |Socket
+
+10.159.16.81 | User: root Authentication Failed | Password: ca$hc0w
+10.159.16.85 | User: root Authentication Failed | Password: ca$hc0w
+10.198.4.1 | Socket Error |Socket
+
+(ssh: connect to host 10.198.4.1 port 22: Connection refused)
+Script End Time | 2020-05-21 20:07:03.975626

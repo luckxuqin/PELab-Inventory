@@ -1,0 +1,94 @@
+<main class="content-area custom-padding">
+  Management Domain:
+  <clr-datagrid>
+    <clr-dg-column> Domain </clr-dg-column>
+    <clr-dg-column> vCenter </clr-dg-column>
+    <clr-dg-column> NSX-T </clr-dg-column>
+    <clr-dg-column> Number of Clusters </clr-dg-column>
+
+    <!--div *clrDgItems="let record of this.data">
+      <ng-container *ngIf="record.VCF==this.id">
+        <ng-container *ngIf="record.Domain.includes('Mgmt')">
+          <clr-dg-row>
+            <clr-dg-cell *ngFor="let col of this.cols">
+              {{record[col]}}
+            </clr-dg-cell>
+          </clr-dg-row>
+        </ng-container>
+      </ng-container>
+    </div-->
+    <clr-dg-row *clrDgItems="let record of this.data_domain_mgmt">
+      <clr-dg-cell>
+        <a [routerLink]="['/playground/cluster', record.Domain_Name]">
+          {{ record.Domain_Name }}
+        </a>
+      </clr-dg-cell>
+      <clr-dg-cell>
+        Placehoder
+      </clr-dg-cell>
+      <clr-dg-cell>
+        Placehoder
+      </clr-dg-cell>
+      <clr-dg-cell>
+        {{record.Cluster_Num}}
+      </clr-dg-cell>
+      <div *clrIfExpanded
+            ngProjectAs="clr-dg-row-detail">
+            Clusters under this Management Domain are:
+            <ul class="list">
+              <div *ngFor="let cluster of this.clusters">
+                <div *ngIf="cluster.Domain==record.Domain_Name">
+                  <li>{{cluster.Cluster_Name}}</li>
+                </div>
+              </div>
+            </ul>
+      </div>
+    </clr-dg-row>
+
+
+    <!--clr-dg-row *ngIf="record.VCF==this.id" *clrDgItems="let record of this.data">
+        <clr-dg-cell *ngFor="let col of this.cols">
+          {{record[col]}}
+        </clr-dg-cell>
+    </clr-dg-row-->
+  </clr-datagrid>
+  Workload Domains:
+  <clr-datagrid>
+    <clr-dg-column> Domain </clr-dg-column>
+    <clr-dg-column> vCenter </clr-dg-column>
+    <clr-dg-column> NSX-T </clr-dg-column>
+    <clr-dg-column> Number of Clusters </clr-dg-column>
+
+    <clr-dg-row *clrDgItems="let record of this.data_domain_wkld">
+      <clr-dg-cell>
+        <a [routerLink]="['/playground/cluster', record.Domain_Name]">
+          {{ record.Domain_Name }}
+        </a>
+      </clr-dg-cell>
+      <clr-dg-cell>
+        Placehoder
+      </clr-dg-cell>
+      <clr-dg-cell>
+        Placehoder
+      </clr-dg-cell>
+      <clr-dg-cell>
+        {{record.Cluster_Num}}
+      </clr-dg-cell>
+      <div *clrIfExpanded
+            ngProjectAs="clr-dg-row-detail">
+            Clusters under this Workload Domain are:
+            <ul class="list">
+              <div *ngFor="let cluster of this.clusters">
+                <div *ngIf="cluster.Domain==record.Domain_Name">
+                  <li>{{cluster.Cluster_Name}}</li>
+                </div>
+              </div>
+            </ul>
+      </div>
+    </clr-dg-row>
+
+
+
+  </clr-datagrid>
+
+</main>
