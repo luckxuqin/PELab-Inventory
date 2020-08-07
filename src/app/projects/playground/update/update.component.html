@@ -1,8 +1,10 @@
 <div class="main-container">
   <div class="content-container">
     <div class="content-area">
-      <button class="btn" (click)="wizard.open()">New VCF Lab</button>
-      <button class="btn" (click)="copy(); wizard.open()">Update Selected VCF Lab</button>
+      <div class="btn-group btn-outline">
+        <button class="btn" (click)="wizard.open()">New VCF Lab</button>
+        <button class="btn" (click)="copy(); wizard.open()">Update Selected VCF Lab</button>
+      </div>
       <clr-datagrid [(clrDgSingleSelected)]="selectedVCF" [clDgRowSelection]="true">
         <clr-dg-column [style.width.px]="200" class="width--num" [clrDgField]="'Name'">
           VCF
@@ -174,7 +176,11 @@
           </div>
       </section>
     </form>
-    <button class="btn btn-secondary" (click)="addClusterMgmt()">Add a Cluster for this Domain</button>
+    <div class="btn-group btn-outline">
+      <button class="btn"  (click)="addClusterMgmt()"><clr-icon shape="plus"></clr-icon> Cluster</button>
+      <button class="btn"  (click)="dropClusterMgmt()"><clr-icon shape="minus"></clr-icon> Cluster</button>
+    </div>
+
 
   </clr-wizard-page>
 
@@ -236,8 +242,14 @@
             </div>
         </section>
       </form>
-      <button class="btn btn-secondary" (click)="addClusterWkld(index)">Add a Cluster for this Domain</button>
-      <button class="btn btn-secondary" (click)="addWkldDomain()">Add a Workload Domain</button>
+      <div class="btn-group btn-outline">
+        <button class="btn"  (click)="addClusterWkld(index)"><clr-icon shape="plus"></clr-icon> Cluster</button>
+        <button class="btn"  (click)="dropClusterWkld(index)"><clr-icon shape="minus"></clr-icon> Cluster</button>
+      </div>
+      <div class="btn-group btn-outline">
+        <button class="btn"  (click)="addWkldDomain()"><clr-icon shape="plus"></clr-icon> Domain</button>
+        <button class="btn"  (click)="dropWkldDomain()"><clr-icon shape="minus"></clr-icon> Domain</button>
+      </div>
     </clr-wizard-page>
   </ng-container>
 

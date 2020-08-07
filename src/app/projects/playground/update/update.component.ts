@@ -100,13 +100,25 @@ export class UpdateComponent implements OnInit {
     this.domain_mgmt.clusters.push(this.idle_cluster());
     this.domain_mgmt.Cluster_Num = Number(this.domain_mgmt.Cluster_Num) + 1;
   }
+  dropClusterMgmt () {
+    this.domain_mgmt.clusters.pop();
+    this.domain_mgmt.Cluster_Num = Number(this.domain_mgmt.Cluster_Num) - 1;
+  }
   addClusterWkld (index: number ) {
     this.domain_wkld[index].clusters.push(this.idle_cluster());
     this.domain_wkld[index].Cluster_Num = Number(this.domain_wkld[index].Cluster_Num) + 1;
   }
+  dropClusterWkld (index: number ) {
+    this.domain_wkld[index].clusters.pop();
+    this.domain_wkld[index].Cluster_Num = Number(this.domain_wkld[index].Cluster_Num) - 1;
+  }
   addWkldDomain () {
     this.domain_wkld.push(this.idle_domain());
     this.workload_index.push(this.workload_index.length);
+  }
+  dropWkldDomain () {
+    this.domain_wkld.pop();
+    this.workload_index.pop();
   }
 
 
@@ -216,11 +228,6 @@ export class UpdateComponent implements OnInit {
     this.domain_mgmt = this.idle_domain();
     this.domain_wkld.push(this.idle_domain());
   }
-}
-
-export interface ExcelData {
-  cols: object;
-  data: object[];
 }
 
 export interface UpdatedData {
