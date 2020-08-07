@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { ClrDatagridFilterInterface, ClrDatagridFilter } from '@clr/angular';
 import { ClrDatagridStringFilterInterface } from '@clr/angular';
 import { ActivatedRoute } from '@angular/router';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'berry-filter',
@@ -26,7 +27,7 @@ export class VcfComponent implements OnInit {
   page: string;
   private sub: any;
 
-  private serverUrl = 'http://localhost:8000/';
+  private serverUrl = HomeComponent.serverUrl;
 
   cols: string[] = ['HostIP','Status','OEM','Server_Model','Team','AssignTo','TestBed','StartDate','EndDate'];
   data: object[] = [];

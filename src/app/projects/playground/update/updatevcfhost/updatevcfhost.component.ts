@@ -7,6 +7,7 @@ import { ClrDatagridStringFilterInterface } from '@clr/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClrWizard } from '@clr/angular';
+import { HomeComponent } from '../../home/home.component';
 
 @Component({
   selector: 'berry-filter',
@@ -35,7 +36,7 @@ export class UpdatevcfhostComponent implements OnInit {
     }),
   };
 
-  private serverUrl = 'http://localhost:8000/';
+  private serverUrl = HomeComponent.serverUrl;
 
   id: string;
   page: string;

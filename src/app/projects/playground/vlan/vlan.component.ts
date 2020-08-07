@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'berry-filter',
@@ -16,7 +17,7 @@ export class VlanComponent implements OnInit {
 
   constructor (private readonly http: Http) { }
 
-  private serverUrl = 'http://localhost:8000/';
+  private serverUrl = HomeComponent.serverUrl;
 
   cols: string[] = [ 'Name', '802.1Q Tag', 'MAC-limit', 'Virtual router' ];
   data: object[] = [];

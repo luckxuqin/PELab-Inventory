@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { ClrDatagridFilterInterface, ClrDatagridFilter } from '@clr/angular';
 import { ClrDatagridStringFilterInterface } from '@clr/angular';
 import { ActivatedRoute } from '@angular/router';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'berry-filter',
@@ -22,7 +23,7 @@ export class HostComponent implements OnInit {
   constructor (private readonly http2: HttpClient,
     private readonly http: Http, private route: ActivatedRoute) { }
 
-  private serverUrl = 'http://localhost:8000/';
+  private serverUrl = HomeComponent.serverUrl;
   // private SSG_2027R_AR24NV = require('assets/images/SSG-2027R-AR24NV.png');
 
   id = '';

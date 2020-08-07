@@ -20,6 +20,7 @@ declare var require: any;
 
 
 export class HomeComponent implements OnInit {
+  public static serverUrl = 'http://10.156.166.112:8000/';
 
   constructor (private readonly http2: HttpClient,
     private readonly http: Http, private route: ActivatedRoute) { }
@@ -29,8 +30,6 @@ export class HomeComponent implements OnInit {
   showReserve = false;
   showFree = false;
   showReport = false;
-  private serverUrl = 'http://localhost:8000/';
-
 
   vo = {
     team: '',
@@ -52,7 +51,7 @@ export class HomeComponent implements OnInit {
   data_domain: object[] = [];
 
   getVcf () {
-    return this.http.get(this.serverUrl + 'api/vcf')
+    return this.http.get(HomeComponent.serverUrl + 'api/vcf')
         .map((res: Response) => res.json()).subscribe(data => {
           console.log(data);
           this.data_vcf = data.data;
@@ -60,7 +59,7 @@ export class HomeComponent implements OnInit {
   }
 
   getDomain () {
-    return this.http.get(this.serverUrl + `api/domain`)
+    return this.http.get(HomeComponent.serverUrl + `api/domain`)
         .map((res: Response) => res.json()).subscribe(data => {
           console.log(data);
           this.data_domain = data.data;
